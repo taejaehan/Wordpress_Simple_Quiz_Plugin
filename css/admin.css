@@ -1,0 +1,393 @@
+#gguljam_pension{
+	width : 100%;
+	height: auto;
+	background : #74ccff url(/wp-content/plugins/gguljam-pension/imgs/bg_top.jpg) 0px 0px no-repeat;
+	background-size: 100%;
+}
+
+#gguljam_pension #title, #gguljam_pension #title img{
+	width : 80%;
+	height: auto;
+	margin: 2% 10% 1% 10%;
+}
+#gguljam_pension #video{
+	width : 100%;
+	height: auto;
+}
+
+#gguljam_pension #video iframe{
+	width : 87%;
+	height: 330px;
+	margin: 0 6%;
+	border: #126fef solid 3px;
+}
+
+#gguljam_pension #event_info{
+	width : 82%;
+	height: 60px;
+	margin: 2% 9%;
+}
+#gguljam_pension #event_info img{
+	width : 50%;
+	height: auto;
+	float: left;
+}
+#gguljam_pension #event_info #event_info_btn{
+	width : 30%;
+	height: 40px;
+	margin-top:5px;
+	background: url(/wp-content/plugins/gguljam-pension/imgs/event_btn.png) 0px / 100% no-repeat;
+	float: right;
+	cursor : pointer;
+}
+#gguljam_pension #event_01{
+	width : 88%;
+	height: auto;
+	margin: 0 6%;
+	position : relative;
+}
+#gguljam_pension #event_01 img{
+	 width: 100%;
+}
+
+#gguljam_pension #event_01 .room{
+	height: 33%;
+	position : absolute;
+	top : 30%;
+	background-position : 50% 80%;
+	background-repeat : no-repeat; 
+}
+#gguljam_pension #event_01 #eat_room{
+	width: 44%;	/*양쪽에 6% margin이 있으므로 100%는 88%*/
+	left:6%;
+	background-color: #26beae;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/eat_img.png);
+	background-size: 65%;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+#gguljam_pension #event_01 #some_room{
+	width: 44%;	/*양쪽에 6% margin이 있으므로 100%는 88%*/
+	position : absolute;
+	right:6%;
+	background-color: #ff8d9a;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/some_img.png);
+	background-size: 65%;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+#gguljam_pension #event_01 .count{
+	width : 130px;
+	height: 64px;
+	line-height: 64px;
+	background: none;
+	margin: 0 auto;
+	margin-top : 13px;
+	border : none;
+	text-align: center;
+	font-size: 180%;
+} 
+#gguljam_pension #event_01 #eat_count{
+	left : 10%;
+	color : #0196c8;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/bg_eat_count.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+#gguljam_pension #event_01 #some_count{
+	right: 0%;
+	color : #fb5222;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/bg_some_count.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+#gguljam_pension #event_01 button{
+	width : 37%;
+	height:  9.5%;
+	background: none;
+	border : none;
+	position : absolute;
+	top : 65%;
+}
+#gguljam_pension #event_01 #eat_btn{
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/eat_btn.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	left: 10%;
+}
+#gguljam_pension #event_01 #some_btn{
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/some_btn.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	left: 55%;
+}
+
+#gguljam_pension #sns_link{
+	width : 60%;
+	height: 100px;
+	margin: 0 20%;
+	position : absolute;
+	top: 87%;
+	left: 0;
+}
+#gguljam_pension #sns_link a{
+	width : 55px;
+	height: 55px;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/social.png);
+	background-size: 620%;
+	background-repeat: no-repeat;
+	position : absolute;
+	top: 0;
+	left: 0;
+}
+
+/***** event END CSS 추가 시작 by tjhan 150826 *********/
+
+#gguljam_pension #event_end{
+	width : 88%;
+	height: auto;
+	margin: 5% 6%;
+	position : relative;
+}
+#gguljam_pension #event_end img{
+	 width: 100%;
+}
+#gguljam_pension #event_end .event_result .count{ 
+	position : absolute;
+	font-size : 24px;
+	font-weight: bold;
+	top : 52.5%;
+	width : 90%;
+}
+#gguljam_pension #event_end .event_result #eat_count{ 
+	left : 30.5%;
+	color : #0196c8;
+}
+#gguljam_pension #event_end .event_result #some_count{ 
+	left: 79%;
+	color : #b23a18;
+}
+#gguljam_pension #event_end #win_confirm{
+	width : 38%;
+	height: 12%;
+	position : absolute;
+	top : 70%;
+	left: 31%;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/win_confirm_btn.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+#gguljam_pension #event_end #sns_link{
+	top: 89%;
+}
+
+/***** event END CSS 추가 끝 by tjhan 150826 *********/
+
+/*ie8일 때는 background-size가 적용되지 않으므로 height 101PX > 55px 이미지로 교체*/
+#gguljam_pension.ie8 #sns_link a{
+	width : 50px;
+	height: 50px;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/social_ie8.png);
+}
+#gguljam_pension #sns_link .fb{
+	background-position: 0px 100%;
+}
+#gguljam_pension #sns_link .story{
+	left: 20%;
+	background-position: 25% 100%;
+}
+#gguljam_pension #sns_link .twitter{
+	left: 40%;
+	background-position: 50% 100%;
+}
+#gguljam_pension #sns_link .blog{
+	left: 60%;
+	background-position: 75% 100%;
+}
+#gguljam_pension #sns_link .youtube{
+	left: 80%;
+	background-position: 100% 100%;
+}
+
+#gguljam_pension #sns_link .fb:hover{
+	background-position: 0px 0px
+}
+#gguljam_pension #sns_link .story:hover{
+	left: 20%;
+	background-position: 25% 0px;
+}
+#gguljam_pension #sns_link .twitter:hover{
+	left: 40%;
+	background-position: 50% 0px;
+}
+#gguljam_pension #sns_link .blog:hover{
+	left: 60%;
+	background-position: 75% 0px;
+}
+#gguljam_pension #sns_link .youtube:hover{
+	left: 80%;
+	background-position: 100% 0px;
+}
+#gguljam_pension #sns_link .fb:active{
+	background-position: 0px 0px;
+}
+#gguljam_pension #sns_link .story:active{
+	left: 20%;
+	background-position: 25% 0px;
+}
+#gguljam_pension #sns_link .twitter:active{
+	left: 40%;
+	background-position: 50% 0px;
+}
+#gguljam_pension #sns_link .blog:active{
+	left: 60%;
+	background-position: 75% 0px;
+}
+#gguljam_pension #sns_link .youtube:active{
+	left: 80%;
+	background-position: 100% 0px;
+}
+
+#gguljam_pension #event_popup_overlay{
+	background-color : rgba(0,0,0,0.5);
+	width :100%;
+	height: 100%;
+	position : absolute;
+	top :0;
+	left :0;
+	display: none;
+}
+#gguljam_pension #event_popup{
+	width :80%;
+	height: 100%;
+	position : absolute;
+	margin: 10%;
+	top :15%;
+	left :0;
+	opacity: 1;
+	display: none;
+}
+#gguljam_pension #event_popup #popup_close{
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 10px;
+	right: 18px;
+	cursor: pointer;
+}
+#gguljam_pension #event_popup #show_result{
+	width : 40%;
+	height: 40px;
+	position:absolute;
+	top:23%;
+	right:30%;
+	margin: 0 auto;
+	border : none;
+	background: url(/wp-content/plugins/gguljam-pension/imgs/show_result.png) 0px / 100% no-repeat;
+}
+
+#gguljam_pension #event_02{
+	width : 88%;
+	height: auto;
+	margin: 0 6%;
+	position : relative;
+}
+#gguljam_pension #event_02 img{
+	 width: 100%;
+}
+#gguljam_pension #event_02 #p_info_btn{
+	width : 38%;
+	height: 12%;
+	position : absolute;
+	top : 75%;
+	left: 31%;
+	background-image: url(/wp-content/plugins/gguljam-pension/imgs/p_info_btn.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	
+}
+
+@media (max-width:720px) {
+	#gguljam_pension #event_info{
+		height: 40px;
+	}
+	#gguljam_pension #event_info #event_info_btn{
+		margin-top:0;
+	}
+	#gguljam_pension #event_01 .count{
+		width : 90px;
+		height: 44px;
+		line-height: 44px;
+		margin-top : 10px;
+		font-size: 115%;
+	}
+	#gguljam_pension #event_popup{
+		top :45%;
+	}
+	#gguljam_pension #sns_link a{
+		width : 40px;
+		height: 40px;
+	}
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 22px;
+/*		font-weight: bold;
+		top : 52.5%;
+		width : 90%;*/
+	}
+}
+
+@media (max-width:630px) {
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 20px;
+	}
+}
+
+@media (max-width:560px) {
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 18px;
+	}
+}
+@media (max-width:530px) {
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 16px;
+	}
+}
+@media (max-width:480px) {
+	#gguljam_pension #event_info{
+		height: 30px;
+	}
+	#gguljam_pension #event_info #event_info_btn{
+		height: 30px;
+		margin-top:0;
+	}
+	#gguljam_pension #event_01 .count{
+		width : 65px;
+		height: 30px;
+		line-height: 30px;
+		margin: 0 auto;
+		margin-top : 5px;
+		font-size: 90%;
+	} 
+	#gguljam_pension #event_popup{
+		top :49%;
+	}
+	#gguljam_pension #sns_link a{
+		width : 30px;
+		height: 30px;
+	}
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 14px;
+	}
+}
+
+@media (max-width:380px) {
+	#gguljam_pension #event_end .event_result .count{ 
+		font-size : 10px;
+	}
+}

@@ -1,0 +1,13 @@
+.youth-hidden{
+	display:none;
+}
+
+#youthqna_event_wrap label{
+	width:70%;
+}
+#youthqna_event_wrap .form-contact label{
+	width:20%;
+}
+.selected-op button{
+	color:red;
+}
