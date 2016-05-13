@@ -1,3 +1,4 @@
+
 <?php
 
 $url = $_SERVER['REQUEST_URI'];
@@ -5,9 +6,11 @@ $parts = parse_url($url);
 parse_str($parts['query'], $query);
 // echo $query['category'];
 $category = intval($query['category']);
-
+if($category === 0 || $category === '' || $category === null){
+  $category = 1;
+}
 global $wpdb;
-$exams = $wpdb->get_results( 'SELECT * FROM youth_question WHERE deleted_at is NULL AND c_id='.$category);
+$quizzes = $wpdb->get_results( 'SELECT * FROM youth_question WHERE deleted_at is NULL AND c_id='.$category);
 $categories = $wpdb->get_results( 'SELECT * FROM youth_category ');
 $types = $wpdb->get_results( 'SELECT * FROM youth_type ');
 $answers = $wpdb->get_results( 'SELECT * FROM youth_answer ');
@@ -44,8 +47,8 @@ function youth_qna_exam(){
       </thead>
       <tbody id="quiz-list">
     <?php
-    if(count($exams)):
-      foreach($exams as $quiz):
+    if(count($quizzes)):
+      foreach($quizzes as $quiz):
     ?>  
     <!--edit quiz-->
         <tr>
@@ -112,7 +115,7 @@ function youth_qna_exam(){
         <td colspan="5"><?php _e('No Quizzes found.', 'YOUTH_QNA') ?></td>
       </tr>
     <?php endif;
-      if(count($exams) < 5):
+      if(count($quizzes) < 5):
     ?>
       <!--new quiz 5개 한정-->
 
@@ -162,9 +165,9 @@ function youth_qna_exam(){
       <?php
       endif;
       ?>
+      <!-- <button type="button" id="youth_event_excel">Excel</button> -->
       </tbody>
     </table>
     </div>
 </div>
-<script type="text/javascript" src="<?php echo(plugins_url()) ?>/youth_qna/js/admin.js" />
 

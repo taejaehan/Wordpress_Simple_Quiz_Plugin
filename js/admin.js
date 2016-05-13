@@ -85,6 +85,12 @@ jQuery(document).ready(function($){
     });
   });
 
+  // 엑셀 다운로드
+  $("#youth_event_excel").click(function(e) {
+    console.log('youth_event_excel');
+    // e.preventDefault();
+    location.href = youth_qna_excel_export.save_excel;
+  });
 
   // $('#new_quiz').on('click', function(e) {
     // console.log('new_quiz');

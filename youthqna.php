@@ -26,6 +26,30 @@ add_action( 'wp_ajax_nopriv_youthqna_join_event', 'youthqna_join_event' );
 
 add_shortcode( 'youthqna_online_quiz', 'youthqna_shortcode' );
 
+
+
+function jetpack_og_tags_youthqna( $tags ) {
+  // unset( $tags['og:image'] );
+  unset( $tags['og:url'] );
+  unset( $tags['og:title'] );
+  unset( $tags['og:description'] );
+  unset( $tags['twitter:title'] );
+  unset( $tags['twitter:description'] );
+
+  // $fb_home_img = plugin_dir_url( __FILE__ )."imgs/thumb/region".rand(1,8).".jpg";
+  // $tags['og:image'] = esc_url( $fb_home_img );
+  $tags['og:url'] = "http://samsungblog.major-apps-1.com/youthqna_online_quiz/?".rand(123,9999999);
+  $tags['og:title'] = "2016 삼성 플레이 더 챌린지– 청춘문답";
+  $tags['og:description'] = "아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답>";
+  $tags['twitter:title'] = "2016 삼성 플레이 더 챌린지– 청춘문답";
+  $tags['twitter:description'] = "아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답>";
+  // $tags['twitter:card']
+  // $tags['twitter:image']
+  return $tags;
+}
+
+add_filter( 'jetpack_open_graph_tags', 'jetpack_og_tags_youthqna' );
+
 /**
  * [이벤트에 참여합니다]
  */
@@ -87,6 +111,8 @@ function youthqna_html_form_code(){
   ?>
   <div id="youthqna_full_wrap">
     <h3>quiz online!!!!!!!!!!</h3>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo site_url(); ?>/youthqna_online_quiz/" class="fb" target="_blank">facebook</a>
+    <a  onclick="window.open('https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fblog.samsung.com%2F5562%2F&amp;text=<?php echo urlencode(html_entity_decode('아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답> '.site_url().'/youthqna_online_quiz/'));?>','twitter_share_dialog','width=626 height=436'); return false;" class="twitter" target="_blank">twitter</a>
     <div id="youthqna_quiz_wrap">
     <input id="youth_quiz_category" type="hidden" value="<?php echo $categoryId ?>">
   <?php
@@ -172,28 +198,13 @@ function youthqna_html_form_code(){
           foreach($quizzes as $quiz):
       ?>  
         <!--edit quiz-->
-        <div id="youth_quiz_<?php echo $qindex ?>" >
+        <div id="youth_quiz_<?php echo $quiz->id ?>" >
           <div>
           Q<?php echo $qindex ?>
           <?php echo $quiz->question ?>
           </div>
-          <div class="youth_quiz_answer">
-        <?php 
-        $aindex = 1;
-        foreach($answers as $a): 
-          if($quiz->id === $a->q_id && $a->is_correct === '1'):
-        ?>
-            <div>
-            정답 : <?php echo($aindex); echo($a->answer); ?>
-            <p>
-            해설 : <?php echo($quiz->explanation) ?>
-            </p>
-            </div>
-        <?php
-          $aindex++;
-          endif;
-        endforeach;
-        ?>
+          <div id="youth_quiz_answer_<?php echo $quiz->id ?>">
+
           </div>
         </div>
       <?php
@@ -203,9 +214,7 @@ function youthqna_html_form_code(){
     </div>
     
     <button id="restart_btn" class="youth-hidden">다시 풀기</button>
-    <link rel="stylesheet" type="text/css" href="<?php echo(plugins_url()) ?>/youth_qna/css/quiz.css" >
-    <script type="text/javascript" src="<?php echo(plugins_url()) ?>/youth_qna/js/quiz.js" >
-    </script>
+
   </div> 
   <!--youthqna_full_wrap-->
   <?php
@@ -237,45 +246,37 @@ function youthqna_get_results(){
   $qCount = count($quizAnswer);
 
   $correctNum = 0;
-  // $whereSql = '';
-  // for($i=0; $i < $qCount; $i++){
-  //   $aId = intval($quizAnswer[$i]['answer_id']);
-  //   if($i === 0){
-  //     $whereSql = $whereSql." id=".$aId;
-  //   }else{
-  //     $whereSql = $whereSql." OR id=".$aId;
-  //   };
-  // };
-  // $sql = "SELECT id FROM youth_answer WHERE is_correct=1 AND (".$whereSql.") ";
-  // $correct = $wpdb->get_results($sql);
-  // if(count($correct)){
-  //   $correctNum++;
-  // }
-  // echo('$correctNum : '.count($correct));
-
   $quizResults = array();
+
   for($i=0; $i < $qCount; $i++){
     $userAnswer = $quizAnswer[$i];
     $qId = intval($userAnswer['quiz_id']);
     $aId = intval($userAnswer['answer_id']);
     $answers = $wpdb->get_results("SELECT * FROM youth_answer WHERE q_id=".$qId);
-    $question = $wpdb->get_results("SELECT explanation FROM youth_question WHERE id=".$qId);
+    $question = $wpdb->get_results("SELECT id, explanation FROM youth_question WHERE id=".$qId);
     // var_dump($answers);
     $aCount = count($answers);
+    $correctId = 0;
     $correctAnswer = '';
+    $correctIndex = 0;
     for($j=0; $j < $aCount; $j++){
       $dbAnswer = $answers[$j];
       $currectAnswerId = 0;
       if($dbAnswer->is_correct){
-        $correctAnswer = intval($dbAnswer->id);
+        $correctIndex = i + 1;
+        $correctId = intval($dbAnswer->id);
+        $correctAnswer = $dbAnswer->answer;
         if($aId === intval($dbAnswer->id)){
           $correctNum++;
         }
       }
     }
-    $quizResults[$i]->correct_a = $correctAnswer;
-    $quizResults[$i]->user_a = $aId;
+    $quizResults[$i]->correct_id = $correctId;
+    $quizResults[$i]->correct_index = $correctIndex;
+    $quizResults[$i]->correct_answer = $correctAnswer;
+    $quizResults[$i]->user_id = $aId;
     $quizResults[$i]->explanation = $question[0]->explanation;
+    $quizResults[$i]->q_id = $question[0]->id;
   };
 
   $return = array(
@@ -578,12 +579,33 @@ function youth_qna_install()
   $wpdb->query($sql7);
 }
 
+//자바스크립트 포함, Ajax처리
+function youth_qna_admin_init(){
+
+  wp_enqueue_script('jquery-ui-datepicker');
+  wp_register_script('youth_qna_excel_export', plugins_url( '/js/admin.js' , __FILE__ ), array('jquery'));
+
+  wp_localize_script('youth_qna_excel_export', 'youth_qna_excel_export',
+    array(
+        //엑셀 저장
+        'save_excel'=>plugins_url().'/youth_qna/youth_qna_excel.php'
+    ));
+  wp_enqueue_script('youth_qna_excel_export');
+
+  wp_enqueue_style( 'youth_qna_admin_css', plugins_url() . '/youth_qna/css/admin.css', '', '1.0');
+  wp_enqueue_style( 'youth_qna_quiz_css', plugins_url() . '/youth_qna/css/quiz.css', '', '1.0');
+  // wp_enqueue_script( 'youth_qna_admin', plugins_url() . '/youth_qna/js/admin.js', '', '1.0', true );
+  wp_enqueue_script( 'youth_qna_quiz', plugins_url() . '/youth_qna/js/quiz.js', '', '1.0', true );
+
+}
+add_action('admin_init', 'youth_qna_admin_init');
+
 /**
  * [css, js 파일을 세팅]
  */
 function youth_qna_scripts() {
-  wp_enqueue_style( 'youth_qna', plugins_url() . '/youth_qna/css/youth.css', '', '1.0');
-  wp_enqueue_script( 'youth_qna', plugins_url() . '/youth_qna/js/youth.js', '', '1.0', true );
+
+ 
 }
 /**
  * [워드프레스 관리자 메뉴를 생성합니다]
@@ -593,5 +615,6 @@ function add_admin_youth_qna_menu() {
   add_submenu_page( 'youth_qna/admin.php', '청춘문답', '온라인 퀴즈', 'manage_options', 'youth_qna/admin.php');
   add_submenu_page( 'youth_qna/admin.php', '청춘문답', '온라인 이벤트', 'manage_options', 'youth_qna/admin_event.php');
   add_submenu_page( 'youth_qna/admin.php', '청춘문답', '오프라인 정답해설', 'manage_options', 'youth_qna/admin_offline.php');
+  add_submenu_page( NULL, '청춘문답', '엑셀', 'manage_options', 'youth_qna/youth_qna_excel.php');
 }
 ?>

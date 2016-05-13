@@ -92,6 +92,7 @@ jQuery(document).ready(function($){
 	});
 	$('#restart_btn').on('click', function(e) {
 		console.log('restart');
+		location.reload();
 	});
 	$('.youthqna-next-btn').on('click', function(e) {
 
@@ -140,6 +141,20 @@ jQuery(document).ready(function($){
 					$('#youthqna_result_wrap').css('display','block');
 					$('#restart_btn').css('display','block');
 
+					var ajaxResults = res.results;
+					for(var i=0; i <= ajaxResults.length; i++){
+						var ajaxResult = ajaxResults[i];
+						var answerHtml = '';
+						answerHtml = "<div>"
+						            +"정답 : "+ ajaxResult.correct_index +" "+ ajaxResult.correct_answer
+						            +"<p>"
+						            +"해설 : "+ ajaxResult.explanation
+						            +"</p>"
+						            +"</div>"
+						$('#youth_quiz_answer_'+ajaxResult.q_id).html(answerHtml);
+					};
+					
+
 		            // if(res){
 		            //   console.log('성공적으로 업로드 했습니다');
 		            //   // location.reload();
@@ -152,5 +167,37 @@ jQuery(document).ready(function($){
 			
 		};
 	}); 
+
+
+	/**
+	 * [facebookShare]
+	 */
+	function facebookShare () {
+	//공유 
+	FB.ui( {
+	    method: 'feed',
+	    name: "2016 삼성 플레이 더 챌린지– 청춘문답",
+	    link: "http://blog.samsung.com/0000/",
+	    picture: "http://blog.samsung.com/0000/xxx.jpg",
+	    caption: "http://blog.samsung.com/0000/",
+	    description : '아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답>http://blog.samsung.com/0000/'
+	  }, function( response ) {
+	      // if ( response !== null && typeof response.post_id !== 'undefined' ) {
+	      //   // console.log( response );
+	      //   var data = {
+	      //     'action': 'gguljam_sns',
+	      //     'fb_id': FB.getUserID()
+	      //   };
+	      //   $.ajax({
+	      //     type: "POST",
+	      //     url: url,
+	      //     data:data,
+	      //     success: function(res){
+	      //       // console.log(data);
+	      //     }
+	      //   });
+	      // }
+	  } );
+	}
 
 })
