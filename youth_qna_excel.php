@@ -1,7 +1,11 @@
 <?php
 
 
-
+define('EVENT_DB_NAME', '');
+define('EVENT_DB_USER', '');
+define('EVENT_DB_PASSWORD', '');
+define('EVENT_DB_HOST', '');
+define('EVENT_DB_CHARSET', '');
 
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
