@@ -32,7 +32,7 @@ function youth_qna_exam(){
       <?php endforeach; ?>
     </select>
     <input id="category_add_name" type="name" value="">
-    <button id="category_add_btn">카테고리 추가하기</button>
+    <button id="category_add_btn">카테고리 추가하기!!</button>
     <table class="widefat">
       <thead>
       <tr>
