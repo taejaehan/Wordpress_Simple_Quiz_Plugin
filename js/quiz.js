@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
 	
 	
 	//퀴즈 스타트
-	$('#youthqna_quiz_start_wrap').on('click', function(e) {
+	$('#youth_quiz_start').on('click', function(e) {
 		mNextStep();
 	});
 
@@ -22,12 +22,14 @@ jQuery(document).ready(function($){
 	$('.youthqna-op-btn').on('click', function(e) {
 		$(this).parent().siblings('li').removeClass('selected-op');
 		$(this).parent().addClass('selected-op');
-		$(this).parents('.youth-quiz').attr('userSelOp', $(this).val());
+		var currentQuizWrap = $(this).parents('.youth-quiz');
+		currentQuizWrap.attr('userSelOp', $(this).val());
+		currentQuizWrap.find('.youthqna-next-btn').attr('disabled',false);
 	});
 
 	//다음 문제 및 채점결과 보기
 	$('.youthqna-next-btn').on('click', function(e) {
-
+		console.log('NEXT!!!!!');
 		// var qindex = parseInt($(this).attr('currentQuizIndex'));
 		var currentQuizWrap = $(this).parents('.youth-quiz');
 		var currentQuizIndex = parseInt(currentQuizWrap.attr('quizIndex'));
@@ -41,6 +43,7 @@ jQuery(document).ready(function($){
 		currentQuizIndex++;
 		var newxQuizWrap = 'youth_quiz_'+currentQuizIndex;
 		currentQuizWrap.css('display','none');
+		console.log('newxQuizWrap : '  + newxQuizWrap);
 		if($('#'+newxQuizWrap).length !== 0){
 			mNextStep();
 		}else{
@@ -69,7 +72,10 @@ jQuery(document).ready(function($){
 		            console.log('success');
 		            console.log('res : ' + JSON.stringify(res));
 		            mUserScore = res.correctNum;
-		            $('#youthqna_result').html('총 '+mUserScore+'개를 맞추셨습니다.');
+		            // $('#youthqna_result').html('총 '+mUserScore+'개를 맞추셨습니다.');
+		            
+		            $('#youthqna_result_score').attr('src','');
+		            $('#youthqna_result_text').attr('src','');
 					var ajaxResults = res.results;
 					for(var i=0; i < ajaxResults.length; i++){
 						var ajaxResult = ajaxResults[i];
@@ -80,7 +86,7 @@ jQuery(document).ready(function($){
 						            +"해설 : "+ ajaxResult.explanation
 						            +"</p>"
 						            +"</div>"
-						$('#youth_quiz_answer_'+ajaxResult.q_id).html(answerHtml);
+						$('#youth_correct_quiz_answer_'+ajaxResult.q_id).html(answerHtml);
 					};
 					mNextStep();
 		        }
@@ -145,8 +151,21 @@ jQuery(document).ready(function($){
 	            console.log('success');
 	            console.log('res : ' + JSON.stringify(res));
 	            mNextStep();
-	   //          mUserScore = res.correctNum;
-	   //          $('#youthqna_result').html('총 '+mUserScore+'개를 맞추셨습니다.');
+	            mUserScore = res.correctNum;
+	            // $('#youthqna_result').html('총 '+mUserScore+'개를 맞추셨습니다.');
+	            var pluginImgUrl = $('#youthqna_result_wrap').attr('pluginImgUrl');
+	            var scoreUrl = pluginImgUrl+'q_results_0'+mUserScore+'.png';
+	            var textUrl;
+	            if(mUserScore < 5){
+		            textUrl = pluginImgUrl+'q_results_sad.png';
+	            }else{
+		            textUrl = pluginImgUrl+'q_results_good.png';
+	            };
+	            console.log('pluginImgUrl : '  + pluginImgUrl);
+	            console.log('scoreUrl : '  + scoreUrl);
+	            console.log('textUrl : '  + textUrl);
+	            $('#youthqna_result_score').attr('src',scoreUrl);
+	            $('#youthqna_result_text').attr('src',textUrl);
 				// $('#youthqna_result_wrap').css('display','block');
 
 	            // if(res){

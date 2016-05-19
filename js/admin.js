@@ -49,9 +49,11 @@ jQuery(document).ready(function($){
         typeLinkTd = $(this).parent().next(),
         typeLinkInput;
     if(typeId === '1'){
-      typeLinkInput = '<input name="type_link" value="empty" readonly/>';
+
+      typeLinkInput = '<input name="type_link" value="" readonly/>';
     }else if(typeId === '2'){
-      typeLinkInput = '<input name="type_link_file" type="file" isDirty="FALSE" />';
+      typeLinkInput = '<input name="type_link_file" type="file" isDirty="FALSE" />'
+                      +'ALT : <input name="img_alt" type="name" value=""/>';
     }else{
       typeLinkInput = '<input name="type_link" type="name" value="" />';
     }
@@ -135,6 +137,8 @@ jQuery(document).ready(function($){
         formData = new FormData(form),
         fileInput = $(this).parent().find("input[name=type_link_file]");
 
+        // TODO : text에서 picture나 video로 변경시 input값 다시 넣어주기
+        // videoInput = $(this).parent().find("input[name=type_link]");
     //file이 변경되었으면 file추가
     if(fileInput.length !== 0 && fileInput.attr('isDirty') === 'TRUE'){
       console.log('file not changed')

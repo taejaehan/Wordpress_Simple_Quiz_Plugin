@@ -15,6 +15,7 @@ global $wpdb;
 $quizzes = $wpdb->get_results( 'SELECT * FROM youth_question WHERE deleted_at is NULL AND c_id='.$category);
 $categories = $wpdb->get_results( 'SELECT * FROM youth_category ');
 $types = $wpdb->get_results( 'SELECT * FROM youth_type ');
+$fields = $wpdb->get_results( 'SELECT * FROM youth_field ');
 $answers = $wpdb->get_results( 'SELECT * FROM youth_answer ');
 
 // $bannerTypes = $wpdb->get_results( 'SELECT * FROM youth_banner_type');
@@ -52,7 +53,9 @@ function youth_qna_exam(){
       <tr>
         <th scope="col"><div style="text-align: center;"><?php _e('배너타입ID', 'YOUTH_QNA') ?></div></th>
         <th scope="col"><?php _e('배너위치', 'YOUTH_QNA') ?></th>       
-        <th scope="col"><?php _e('배너링크', 'YOUTH_QNA') ?></th>
+        <th scope="col"><?php _e('배너이미지', 'YOUTH_QNA') ?></th>
+        <th scope="col"><?php _e('배너ALT', 'YOUTH_QNA') ?></th>
+        <th scope="col"><?php _e('배너href', 'YOUTH_QNA') ?></th>
         <th scope="col"><?php _e('숨김', 'YOUTH_QNA') ?></th>
         <th scope="col"><?php _e('Action', 'YOUTH_QNA') ?></th>
       </tr>
@@ -87,6 +90,12 @@ function youth_qna_exam(){
             <input name="banner_link" type="file" isDirty="FALSE" />
           </td>
           <td>
+          <input name="banner_alt" type="text" value="<?php echo $banner->banner_alt;?>">
+          </td>
+          <td>
+            <input name="banner_href" type="text" value="<?php echo $banner->banner_href;?>">
+          </td>
+          <td>
           <input class="banner-checkbox-input" name="is_hidden" type="checkbox" value="<?php if($banner->is_hidden): echo '1'; else: echo '0'; endif;?>" <?php if($banner->is_hidden) echo 'checked';?> <?php if(intval($banner->t_id) !== 1) echo 'readonly' ;?>>
           </td>
           <td>
@@ -114,6 +123,7 @@ function youth_qna_exam(){
         <th scope="col"><div style="text-align: center;"><?php _e('ID', 'YOUTH_QNA') ?></div></th>
         <th scope="col"><?php _e('타입', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('타입링크', 'YOUTH_QNA') ?></th>       
+        <th scope="col"><?php _e('영역', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('문제', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('답변', 'YOUTH_QNA') ?></th>
         <th scope="col"><?php _e('해설', 'YOUTH_QNA') ?></th>
@@ -162,7 +172,7 @@ function youth_qna_exam(){
             ?>
             </p>
             <input name="type_link_file" type="file" isDirty="FALSE" />
-            <!-- <input name="type_link" type="hidden" value="" /> -->
+            ALT : <input name="img_alt" type="name" value="<?php echo($quiz->img_alt) ?>"/>
           <?php
             else:
               //video
@@ -171,6 +181,15 @@ function youth_qna_exam(){
           <?php
             endif;
           ?>
+          </td>
+          <td>
+            <select class="quiz-field-selctor" name="field">
+              <?php foreach($fields as $f): ?>
+              <option value="<?php echo $f->id?>" <?php if($quiz->type_id ===  $f->id) echo 'selected'?>>
+                <?php echo $f->name?>
+              </option>
+              <?php endforeach; ?>
+            </select>
           </td>
           <td>
             <input name="question" type="name" value="<?php echo($quiz->question) ?>" />
@@ -230,7 +249,7 @@ function youth_qna_exam(){
           <input name="category" type="hidden" value="<?php echo($category) ?>" />
           <td>New</td>
           <td>
-            <select name="type">
+            <select class="quiz-type-selctor" name="type">
               <?php foreach($types as $t): ?>
               <option value="<?php echo $t->id?>" >
                 <?php echo $t->name?>
@@ -239,19 +258,28 @@ function youth_qna_exam(){
             </select>
           </td>
           <td>
-            <input name="type_link" type="name" value="">
+            <input name="type_link" value="empty" readonly/>
+          </td>
+          <td>
+            <select class="quiz-field-selctor" name="field">
+              <?php foreach($fields as $f): ?>
+              <option value="<?php echo $f->id?>" <?php if($quiz->type_id ===  $f->id) echo 'selected'?>>
+                <?php echo $f->name?>
+              </option>
+              <?php endforeach; ?>
+            </select>
           </td>
           <td>
             <input name="question" type="name" value="">
           </td>
           <td>
             <?php 
-            for($index = 0; $index < 4; $index++):
+            for($index = 0; $index < $QUIZ_LIMIT; $index++):
             ?>
               <div>
               <input name="answer-id-<?php echo($index) ?>" type="hidden" value="new">
               <span><input name="answer-text-<?php echo($index) ?>" type="text" value=""></span>
-              <input class="answer-checkbox-input" name="answer-checkbox-<?php echo($index) ?>" type="checkbox" value="new">
+              <input class="answer-checkbox-input" name="answer-checkbox-<?php echo($index) ?>" type="checkbox" value="new" <?php if($index === 0) echo 'checked'?>>
               </div>
             <?php 
             endfor; 
