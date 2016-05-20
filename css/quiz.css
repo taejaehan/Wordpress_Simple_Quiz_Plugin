@@ -4,6 +4,7 @@
 	background-color : #ddd;
 	padding :15px 0;
 	text-align: center;
+	position: relative;
 }
 #youthqna_full_wrap #youthqna_top_wrap{
 	background-color : #fff;
@@ -36,24 +37,13 @@
 	margin : 0 2%;
 }
 
-
-
-
-#youthqna_event_wrap label{
-	width:70%;
-}
-#youthqna_event_wrap .form-contact label{
-	width:20%;
-}
-
+/******************************퀴즈 스텝별 display***************************************/
 #youthqna_quiz_section{
-	padding : 8% 7.25%;
+	padding : 4% 7.25%;
 }
 #youthqna_quiz_section .quiz-step{
 	display:none;
 }
-
-
 
 .youthqna-step-1 #youthqna_quiz_start_wrap{
 	display:block;
@@ -79,16 +69,23 @@
 .youthqna-step-8 #youthqna_event_wrap{
 	display:block;
 }
+/*step-9에서도 이벤트랩은 유지*/
+.youthqna-step-9 #youthqna_event_wrap{
+	display:block;
+}
 .youthqna-step-9 #youthqna_event_result_wrap{
 	display:block;
 }
 .youthqna-step-10 #show_correct_answer_wrap{
 	display:block;
 }
+/******************************퀴즈 시작/진행***************************************/
 
 #youthqna_quiz_start_wrap{
 	position: relative;
 }
+
+
 #youthqna_quiz_start_wrap #youth_quiz_start{
     width: 40%;
     height: 9.3%;
@@ -125,9 +122,13 @@
 }
 .youth-quiz-refer{
 	border: 2px solid #5cd500;
+	background-color:#fff;
 }
 .youth-quiz-refer .youth-quiz-refer-content{
 	width:100%;
+}
+.youth-quiz-refer .youth-quiz-refer-text{
+	padding:3% 5%;
 }
 .youth-quiz .youth-quiz-op{
 
@@ -220,8 +221,8 @@
 .youth-quiz-bottom-wrap .youthqna-next-btn:disabled{
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_next_dis.png);
 }
-
-#youthqna_result_wrap{
+/******************************이벤트 참여***************************************/
+#youthqna_result_wrap, #youthqna_event_wrap{
 	padding : 8% 7.25%;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/quiz_bg.jpg);
     background-repeat: no-repeat;
@@ -230,43 +231,283 @@
     overflow:auto;
     border:solid 10px #dbc287;
 }
+#youthqna_event_wrap{
+	padding : 8% 3%;
+}
 
-#youthqna_faq_agree input{
-	width: 15px;
-	height: 15px;
+#youthqna_result_wrap #youthqna_result_text{
+	margin-bottom: 10px;
+}
+#youthqna_result_wrap .youthqna-result-bottom{
+	padding : 8% 7.25%;
+	border-top : 2px solid #647069;
+	position: relative;
+    overflow: auto;
+}
+#youthqna_result_wrap .youthqna-result-bottom .restart-btn{
+	position: absolute;
+	bottom:0;
+	left:0;
+	width: 48%;
+    height: 70px;
+    border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_restart.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+}
+
+#youthqna_result_wrap .youthqna-result-bottom #join_event_btn{
+	position: absolute;
+	bottom:0;
+	right:0;
+	width: 48%;
+    height: 70px;
+    border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_join_event.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+}
+.youthqna-event-table{
+	border-spacing: 5px 20px;
+    border-collapse: separate;
+}
+
+
+/*라벨*/
+.youthqna-event-mid .youthqna-table-label{
+	width:52%;
+	text-align: left;
+}
+/*라벨과 인풋사이*/
+.youthqna-event-mid .youthqna_table_empty{
+	width:4%;
+}
+/*체크박스2개*/
+.youthqna-checkbox-input{
+	width:6%;
+}
+/*체크박스라벨 2개*/
+.youthqna-checkbox-label{
+	text-align: left;
+	width:17%;
+}
+.youthqna-event-mid .youthqna-table-input{
+
+}
+.youthqna-event-mid .youthqna-table-input input{
+	width:100%;
+	height: 40px;
+}
+.youthqna-event-mid .youthqna-table-label .table-label-div{
+	width: 80%;
+	text-align: right;
+}
+.youthqna-event-mid .youthqna-table-label .table-label-privacy-div{
+    /*width: 100%;*/
+}
+.youthqna-table-label .table-label-privacy-div img{
+    width: 82%;
+    margin-left: 18%;
+}
+#youthqna_event_wrap #youthqna_event_top{
+	width:70%;
+}
+#youthqna_event_wrap .youthqna-privacy-wrap{
+	position: absolute;
+	bottom:0;
+	right:0;
+}
+#youthqna_faq_agree {
+	position: relative;
+	vertical-align: middle;
+}
+#youthqna_faq_agree .event-checkbox-input{
+	width: 20px;
+	height: 20px;
 	float: left;
 	position: relative;
 	left:0;
-	top:0;
+	top: 13px;
 	margin:0;
 	z-index: 1;
 	opacity:0;
 }
-#youthqna_faq_agree label {
-	width: 11px;
-	height: 11px;
+
+#youthqna_faq_agree .checkbox-label {
+	width: 20px;
+	height: 20px;
 	float: left;
 	position: relative;
-	left:-15px;
-	top:0;
+	left:0;
+	top:-7px;
     background-image:none;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    /*border: 2px solid #ba2726;*/
     background-image: url(/wp-content/plugins/youth_qna/imgs/event_disagree.png);
 }
-#youthqna_faq_agree input[type="checkbox"]:checked + label {
-    /*background-image:url('./faq_checked.jpg'); */
+#youthqna_faq_agree .event-checkbox-input[type="checkbox"]:checked + .checkbox-label {
     background-image: url(/wp-content/plugins/youth_qna/imgs/event_agree.png);
-    background-color: #ba2726;
 }
-#youthqna_faq_agree button{
-	float:right;
-	margin-right:50%;
-	font-weight: bold;
-	color:#515151;
-	background:none;
-	background-color:#dcdddf;
-	border:none;
+#youthqna_faq_agree  .checkbox-text{
+
+}
+#youthqna_event_wrap .youthqna-event-bottom{
+	border-top : 2px solid #647069;
+	padding-top : 20px;
+}
+.youthqna-event-bottom #event-submit-btn{
+	float: right;
+	width: 50%;
+    height: 70px;
+    border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_event_done.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+}
+
+/******************************이벤트 참여 완료***************************************/
+#youthqna_event_and_popup_wrap{
+	position: relative;
+}
+#event-result-close-btn{
+	width:45px;
+	height: 49px;
+	position: absolute;
+	top : -60px;
+	right:0;
+	border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_close.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+}
+#youthqna_event_result_wrap{
+	width:70%;
+	/*height: 100%;*/
+	position: absolute;
+	top : 0;
+	left:15%;
+	background-color:#ddd;
+	z-index:100;
+}
+#youthqna_event_result_wrap #youthqna_event_result{
+	width:94%;
+	height: 94%;
+	margin : 3%;
+	background-color:#fff;
+	padding: 5%;
+	overflow: auto;
+
+}
+#youthqna_event_result #youthqna_event_result_mid{
+	margin: 5% 0;
+	padding : 4% 7.25%;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/quiz_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow:auto;
+    border:solid 10px #dbc287;
+}
+#youthqna_event_result #youthqna_event_result_bottom{
+	
+}
+#youthqna_event_result #youthqna_event_result_bottom #show_correct_answer_btn{
+	float: left;
+	width:48%;
+	height: 70px;
+	border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_correct.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+
+}
+#youthqna_event_result #youthqna_event_result_bottom .restart-btn{
+	float: right;
+	width:48%;
+	height: 70px;
+	border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_restart.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
+
+}
+
+#youthqna_popup_background{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:10;
+    display: none;
+}
+
+
+#youthqna_event_share_info{
+	width:80%;
+}
+#youthqna_event_share_btn_wrap{
+	margin: 20px;
+}
+#youthqna_event_share_btn_wrap a{
+	margin: 5%;
+}
+#youthqna_event_share_btn_wrap a img{
+	width: 25%;
+	max-width: 60px;
+}
+
+
+/******************************정답 및 해설***************************************/
+#show_correct_answer_wrap{
+	/*width:100%;*/
+}
+#show_correct_answer{
+	margin: 5% 0;
+	padding : 4% 7.25%;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/quiz_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow:auto;
+    border:solid 10px #dbc287;
+}
+
+#show_correct_answer .youth-correct-each-quiz-wrap{
+    margin: 10% 0;
+    border-bottom: 1px dashed #fff;
+}
+
+#show_correct_answer .youth-correct-each-quiz-wrap:last-child {
+	border: none;
+}
+#show_correct_answer .youth-correct-answer{
+	color:#fff;
+}
+#show_correct_answer .youth-quiz-question{
+	margin-bottom: 5%;
+}
+#show_correct_answer_wrap .restart-btn{
+	width:50%;
+	height: 70px;
+	border: none;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_correct_restart.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-color: rgba(0,0,0,0);
 }

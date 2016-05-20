@@ -164,14 +164,15 @@ function youthqna_join_event(){
 function youthqna_html_form_code($categoryId = ''){
   global $wpdb;
   //임시로 카테고리 아이디 지정
-  // $categoryId = 1;
+  // $categoryId = 1; $category="1';drop table user;";
   $quizzes = $wpdb->get_results( 'SELECT id,type_id,field_id,type_link,question FROM youth_question WHERE deleted_at is NULL AND c_id='.$categoryId);
   $answers = $wpdb->get_results( 'SELECT id,q_id,answer FROM youth_answer ');
   $banners = $wpdb->get_results( 'SELECT * FROM youth_banner WHERE c_id='.$categoryId);
   date_default_timezone_set('Asia/Seoul');
   ?>
+  
   <div id="youthqna_full_wrap">
-    
+    <div id="youthqna_popup_background"></div>
     <div id="youthqna_top_wrap">
       <section id="youthqna_top_section">
         <div id="youthqna_top_common">
@@ -217,15 +218,17 @@ function youthqna_html_form_code($categoryId = ''){
             <div class="youth-quiz-refer">
           <?php
             $typeId = intval($quiz->type_id);
-            if( $typeId === 2):
+            if( $typeId === 1):
+          ?>
+            <p class="youth-quiz-refer-content youth-quiz-refer-text"><?php echo($quiz->type_link)?></p>
+          <?php
+            elseif( $typeId === 2):
           ?>
             <img class="youth-quiz-refer-content" src="<?php echo($quiz->type_link)?>">
           <?php
             elseif( $typeId === 3):
           ?>
-            
               <iframe class="youth-quiz-refer-content" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $quiz->type_link; ?>" frameborder="0" allowfullscreen></iframe>
-            
           <?php
             endif;
           ?>
@@ -273,72 +276,151 @@ function youthqna_html_form_code($categoryId = ''){
           <img id="youthqna_result_text" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_results_empty.png" />
           </div>
           <div class="youthqna-result-bottom">
-          <button class="restart-btn">다시 풀기</button>
-          <button id="join_event_btn">참여 완료</button>
+            <button class="restart-btn"></button>
+            <button id="join_event_btn"></button>
           </div>
         </div>
+        
+        <div id="youthqna_event_and_popup_wrap">
+          <!--quiz event-->
+          <div id="youthqna_event_wrap" class="quiz-step">
+            <img id="youthqna_event_top" src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_bg_top.png" />
+            <div class="youthqna-event-mid">
+              <table class="youthqna-event-table">
+                <tr>
+                  <td class="youthqna-table-label">
+                    <div class="table-label-div">
+                    <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/label_name.png" />
+                    </div>
+                  </td>
+                  <td class="youthqna_table_empty"></td>
+                  <td colspan="4" class="youthqna-table-input">
+                    <input type="text" name="user_name" id="user_name" value="" placeholder=" 이름을 입력해주세요">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="youthqna-table-label">
+                    <div class="table-label-div">
+                    <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/label_phone.png" />
+                    </div>
+                  </td>
+                  <td class="youthqna_table_empty"></td>
+                  <td colspan="4" class="youthqna-table-input">
+                    <input type="number" name="user_phone" id="user_phone" value="" placeholder=" -를 제외한 숫자만 입력해주세요" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                  </td>
+                </tr>
+                <tr id="youthqna_faq_agree">
+                  <td class="youthqna-table-label">
+                    <div class="table-label-div">
+                    <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/label_privacy.png" />
+                    </div>
+                  </td>
+                  <td class="youthqna_table_empty"></td>
+                  <td class="youthqna-checkbox-input">
+                    <input id="event_faq_agree_1" class="event-checkbox-input" type="checkbox">
+                    <label class="checkbox-label"></label>
+                  </td>
+                  <td class="youthqna-checkbox-label">
+                    <img class="checkbox-text" src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_agree_text.png" />
+                  </td>
+                  <td class="youthqna-checkbox-input">
+                    <input id="event_faq_agree_2" class="event-checkbox-input" type="checkbox" checked>
+                    <label class="checkbox-label"></label> 
+                  </td>
+                  <td class="youthqna-checkbox-label">
+                    <img class="checkbox-text" src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_disagree_text.png" />
+                    </div>
+                  </td>
+                  <tr>
+                    <td class="youthqna-table-label">
+                      <div class="table-label-privacy-div">
+                      <a href="">
+                      <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/btn_privacy.png" />
+                      </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tr>
 
-        <!--quiz event-->
-        <div id="youthqna_event_wrap" class="quiz-step">
-          <div class="form-contact">
-              <label for="user_name" class="contact-label">이 름</label>
-              <input type="text" name="user_name" id="user_name" value="" placeholder="이름을 입력해주세요">
-          </div>
-          <div class="form-contact">
-              <label for="user_phone" class="contact-label">휴대폰 번호</label>
-              <input type="number" name="user_phone" id="user_phone" value="" placeholder="'-'없이 입력해주세요" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-          </div>
-          <div id="youthqna_faq_agree" class="form-private">
-            <!-- <label>개인정보 수집 및 이용 동의</label>
-            <div class="form-agree">
-                <input type="checkbox" id="checkbox-01" class="form-checkbox" name="private-allow-01" value="">
-                <span></span>
-                <label for="cb-private-allow">동의합니다</label>
+              </table>
             </div>
-            <div class="form-agree">
-                <input type="checkbox" id="checkbox-02" class="form-checkbox" name="private-allow-02" value=""checked>
-                <span></span>
-                <label for="cb-private-allow">동의하지 않음</label>
-            </div> -->
-            <input id="event_faq_agree_1" class="event-checkbox" type="checkbox"><label></label>
-            <p>동의합니다</p>
-            <input id="event_faq_agree_2" class="event-checkbox" type="checkbox" checked><label></label> 
-            <p>동의하지 않음</p>
+            <div class="youthqna-event-bottom">
+              <button type="button" id="event-submit-btn"></button>
+            </div>
           </div>
-          <button type="button" id="event-submit-btn">제출하기</button>
+
+          <!--quiz event done-->
+          <div id="youthqna_event_result_wrap" class="quiz-step">
+          <button type="button" id="event-result-close-btn"></button>
+            <div id="youthqna_event_result">
+              <div>
+                <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_done_top_bg.png" />
+              </div>
+              <div id="youthqna_event_result_mid">
+              <img id="youthqna_event_share_info"src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_popup_share_info.png" />
+              <div id="youthqna_event_share_btn_wrap">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo site_url(); ?>/answer<?php echo $categoryId; ?>/" class="fb" target="_blank"><img src="<?php echo plugins_url(); ?>/youth_qna/imgs/btn_fb.png" /></a>
+              <a  onclick="window.open('https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fblog.samsung.com%2F5562%2F&amp;text=<?php echo urlencode(html_entity_decode('아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답> '.site_url().'/answer'.$categoryId.'/'));?>','twitter_share_dialog','width=626 height=436'); return false;" class="twitter" target="_blank"><img src="<?php echo plugins_url(); ?>/youth_qna/imgs/btn_twitter.png" /></a>
+              </div>
+              </div>
+              <div id="youthqna_event_result_bottom">
+              <button id="show_correct_answer_btn"></button>
+              <button class="restart-btn"</button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!--quiz event done-->
-        <div id="youthqna_event_result_wrap" class="quiz-step">
-          <div>참여해주셔서 감사합니다</div>
-          <!-- <button id="quiz_share_btn">공유 하기</button> -->
-          <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo site_url(); ?>/answer<?php echo $categoryId; ?>/" class="fb" target="_blank">facebook</a>
-          <a  onclick="window.open('https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fblog.samsung.com%2F5562%2F&amp;text=<?php echo urlencode(html_entity_decode('아는만큼 보인다!경제경영, 과학기술, 인문사회, 문화예술 다양한 분야의 퀴즈를실제 풀어보고 전문가들의 해설을 듣는 라이브 퀴즈 콘서트 <청춘문답> '.site_url().'/answer'.$categoryId.'/'));?>','twitter_share_dialog','width=626 height=436'); return false;" class="twitter" target="_blank">twitter</a>
-          <button id="show_correct_answer_btn">정답 및 해설보기</button>
-          <button class="restart-btn">다시 풀기</button>
-        </div>
+        
 
         <!--quiz correct answer-->
         <div id="show_correct_answer_wrap" class="quiz-step" >
+          <img id="youthqna_event_share_info"src="<?php echo plugins_url(); ?>/youth_qna/imgs/correct_top.png" />
+          <div id="show_correct_answer" class="youth-quiz">
+          
           <?php
               $qindex = 1;
               foreach($quizzes as $quiz):
-          ?>  
-            <!--edit quiz-->
-            <div id="youth_correct_quiz_<?php echo $quiz->id ?>" >
-              <div>
-              Q<?php echo $qindex ?>
-              <?php echo $quiz->question ?>
-              </div>
-              <div id="youth_correct_quiz_answer_<?php echo $quiz->id ?>">
 
+          ?>
+            <div class="youth-correct-each-quiz-wrap">
+              <div>
+                  <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_0<?php echo $qindex ?>.png" />
+                  <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" />
+              </div>
+              <!--edit quiz-->
+              <div id="youth_correct_quiz_<?php echo $quiz->id ?>" >
+                <p class="youth-quiz-question">
+                <?php echo $quiz->question ?>
+                </p>
+                <div class="youth-quiz-refer">
+                  <?php
+                    $typeId = intval($quiz->type_id);
+                    if( $typeId === 1):
+                  ?>
+                    <p class="youth-quiz-refer-content youth-quiz-refer-text"><?php echo($quiz->type_link)?></p>
+                  <?php
+                    elseif( $typeId === 2):
+                  ?>
+                    <img class="youth-quiz-refer-content" src="<?php echo($quiz->type_link)?>">
+                  <?php
+                    elseif( $typeId === 3):
+                  ?>
+                      <iframe class="youth-quiz-refer-content" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $quiz->type_link; ?>" frameborder="0" allowfullscreen></iframe>
+                  <?php
+                    endif;
+                  ?>
+                </div>
+                <div class="youth-correct-answer" id="youth_correct_quiz_answer_<?php echo $quiz->id ?>">
+                </div>
               </div>
             </div>
           <?php
             $qindex++;
             endforeach;
           ?> 
-          <button class="restart-btn">다시 풀기</button>
+          </div>
+          <button class="restart-btn"></button>
         </div>
 
       </section>

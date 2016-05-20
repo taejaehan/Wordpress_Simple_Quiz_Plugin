@@ -122,7 +122,7 @@ function youth_qna_exam(){
       <tr>
         <th scope="col"><div style="text-align: center;"><?php _e('ID', 'YOUTH_QNA') ?></div></th>
         <th scope="col"><?php _e('타입', 'YOUTH_QNA') ?></th>       
-        <th scope="col"><?php _e('타입링크', 'YOUTH_QNA') ?></th>       
+        <th scope="col"><?php _e('타입컨덴츠', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('영역', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('문제', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('답변', 'YOUTH_QNA') ?></th>
@@ -157,7 +157,7 @@ function youth_qna_exam(){
             if( $q_type_id === 1):
               //text
           ?>
-            <input name="type_link" value="empty" readonly/>
+            <input name="type_link" value="<?php echo($quiz->type_link) ?>"/>
           <?php
             elseif($q_type_id === 2):
               //picture
@@ -258,7 +258,7 @@ function youth_qna_exam(){
             </select>
           </td>
           <td>
-            <input name="type_link" value="empty" readonly/>
+            <input name="type_link" value="" />
           </td>
           <td>
             <select class="quiz-field-selctor" name="field">

@@ -49,8 +49,7 @@ jQuery(document).ready(function($){
         typeLinkTd = $(this).parent().next(),
         typeLinkInput;
     if(typeId === '1'){
-
-      typeLinkInput = '<input name="type_link" value="" readonly/>';
+      typeLinkInput = '<input name="type_link" value="" />';
     }else if(typeId === '2'){
       typeLinkInput = '<input name="type_link_file" type="file" isDirty="FALSE" />'
                       +'ALT : <input name="img_alt" type="name" value=""/>';
