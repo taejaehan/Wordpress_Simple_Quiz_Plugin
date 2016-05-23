@@ -72,7 +72,7 @@ jQuery(document).ready(function($){
   /**
    * [배너 체크박스 value set]
    */
-  $("input[name=banner_is_hidden]").change(function(){
+  $("input[name=is_hidden], input[name=show_online], input[name=show_offline]").change(function(){
     var value = 0;
     if($(this).is(":checked")){
       value = 1;
@@ -190,29 +190,28 @@ jQuery(document).ready(function($){
   // 엑셀 다운로드
   $("#youth_event_excel").click(function(e) {
     console.log('youth_event_excel');
-    // e.preventDefault();
-    location.href = youth_qna_excel_export.ㅌ;
-    // var data = {
-    //   'action': 'youthqna_excel_down',
-    // };
-    // $.ajax({
-    //     url: url,
-    //     data: data,
-    //     method: "POST",
-    //     // dataType: "json",
-    //     success: function(res) {
-    //         console.log('success');
-    //         console.log('res : ' + JSON.stringify(res));
-    //         window.location.href=res;
-    //         // if(res){
-    //         //   console.log('성공적으로 업로드 했습니다');
-    //         //   // location.reload();
-    //         //   window.location = "/wp-admin/admin.php?page=youth_qna%2Fadmin.php&category="+$(this).val();
-    //         // }else{
-    //         //   console.log('업로드 실패');
-    //         // }
-    //     }
-    // });
+    e.preventDefault();
+    var data = {
+      'action': 'youthqna_excel_down',
+    };
+    $.ajax({
+        url: mUrl,
+        data: data,
+        method: "POST",
+        // dataType: "json",
+        success: function(res) {
+            console.log('success');
+            console.log('res : ' + JSON.stringify(res));
+            window.location.href=res;
+            // if(res){
+            //   console.log('성공적으로 업로드 했습니다');
+            //   // location.reload();
+            //   window.location = "/wp-admin/admin.php?page=youth_qna%2Fadmin.php&category="+$(this).val();
+            // }else{
+            //   console.log('업로드 실패');
+            // }
+        }
+    });
   });
 
   // $('#new_quiz').on('click', function(e) {

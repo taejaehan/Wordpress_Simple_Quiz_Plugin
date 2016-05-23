@@ -127,6 +127,8 @@ function youth_qna_exam(){
         <th scope="col"><?php _e('문제', 'YOUTH_QNA') ?></th>       
         <th scope="col"><?php _e('답변', 'YOUTH_QNA') ?></th>
         <th scope="col"><?php _e('해설', 'YOUTH_QNA') ?></th>
+        <th scope="col"><?php _e('온라인', 'YOUTH_QNA') ?></th>
+        <th scope="col"><?php _e('오프라인', 'YOUTH_QNA') ?></th>
         <th scope="col"><?php _e('Action', 'YOUTH_QNA') ?></th>
       </tr>
       </thead>
@@ -227,6 +229,12 @@ function youth_qna_exam(){
             <input name="explanation" type="name" value="<?php echo($quiz->explanation) ?>">
           </td>
           <td>
+          <input class="online-checkbox-input" name="show_online" type="checkbox" value="<?php if($quiz->show_online): echo '1'; else: echo '0'; endif;?>" <?php if($quiz->show_online) echo 'checked';?>>
+          </td>
+          <td>
+          <input class="offline-checkbox-input" name="show_offline" type="checkbox" value="<?php if($quiz->show_offline): echo '1'; else: echo '0'; endif;?>" <?php if($quiz->show_offline) echo 'checked';?>>
+          </td>
+          <td>
             <div><button type="submit" class="quiz-save-btn">Save</button></div>
             <div><button style="margin-top:10px"qId="<?php echo($quiz->id) ?>" type="button" class="quiz-del-btn">Delete</button></div>
           </td>
@@ -238,7 +246,7 @@ function youth_qna_exam(){
         <td colspan="5"><?php _e('No Quizzes found.', 'YOUTH_QNA') ?></td>
       </tr>
     <?php endif;
-      if(count($quizzes) < $ANSWER_LIMIT):
+
     ?>
       <!--new quiz 5개 한정-->
 
@@ -290,13 +298,16 @@ function youth_qna_exam(){
             <input name="explanation" type="name" value="">
           </td>
           <td>
+          <input class="online-checkbox-input" name="show_online" type="checkbox" value="0">
+          </td>
+          <td>
+          <input class="offline-checkbox-input" name="show_offline" type="checkbox" value="1" checked="true">
+          </td>
+          <td>
             <div><button type="submit" class="quiz-save-btn">Save</button></div>
           </td>
           </form>
         </tr>
-      <?php
-      endif;
-      ?>
       <!-- <button type="button" id="youth_event_excel">Excel</button> -->
       </tbody>
     </table>

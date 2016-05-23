@@ -7,8 +7,16 @@ jQuery(document).ready(function($){
 
 	var mQuizFullWrap = $('#youthqna_quiz_section');
 	var mCurrentQuizStep = 0;
+	var mQuizCount = $('.youth-quiz').length - 1; //quiz중 #show_correct_answer 뺀 값(퀴즈 갯수)
 	function mNextStep(){
-		mCurrentQuizStep++;
+		console.log('mQuizCount : ' + mQuizCount);
+		console.log('mCurrentQuizStep : ' + mCurrentQuizStep);
+		//마지막 문제일 경우 mCurrentQuizStep을 7로 변경
+		if(mCurrentQuizStep - mQuizCount === 1){
+			mCurrentQuizStep = 7;
+		}else{
+			mCurrentQuizStep++;
+		}
 		console.log('mCurrentQuizStep : ' + mCurrentQuizStep);
 		if(mCurrentQuizStep < 11){
 			if(mCurrentQuizStep !== 9){
@@ -117,12 +125,11 @@ jQuery(document).ready(function($){
 		            console.log('res : ' + JSON.stringify(res));
 		            mUserScore = res.correctNum;
 		            // $('#youthqna_result').html('총 '+mUserScore+'개를 맞추셨습니다.');
-		            mUserScore = res.correctNum;
 		            mPluginImgUrl = $('#youthqna_result_wrap').attr('pluginImgUrl');
-		            var scoreUrl = mPluginImgUrl+'q_result_0'+mUserScore+'.png';
+		            var scoreUrl = mPluginImgUrl+'q_result_'+mQuizCount+'_'+mUserScore+'.png';
 		            var textUrl;
-		            if(mUserScore < 5){
-			            textUrl = mPluginImgUrl+'q_results_sad.png';
+		            if(mUserScore < mQuizCount){
+			            textUrl = mPluginImgUrl+'q_results_bad.png';
 		            }else{
 			            textUrl = mPluginImgUrl+'q_results_good.png';
 		            };
@@ -131,7 +138,7 @@ jQuery(document).ready(function($){
 		            console.log('textUrl : '  + textUrl);
 		            $('#youthqna_result_score').attr('src',scoreUrl);
 		            $('#youthqna_result_text').attr('src',textUrl);
-
+		            $('#join_event_btn').attr('disabled',false);
 					var ajaxResults = res.results;
 					for(var i=0; i < ajaxResults.length; i++){
 						var ajaxResult = ajaxResults[i];
@@ -140,28 +147,29 @@ jQuery(document).ready(function($){
 						
 						switch(ajaxResult.correct_index){
 							case 1:
-								correctAnswerImgUrl = mPluginImgUrl+'answer_a_act.png';
+								correctAnswerImgUrl = mPluginImgUrl+'answer_1_act.png';
 								break;
 							case 2:
-								correctAnswerImgUrl = mPluginImgUrl+'answer_b_act.png';
+								correctAnswerImgUrl = mPluginImgUrl+'answer_2_act.png';
 								break;
 							case 3:
-								correctAnswerImgUrl = mPluginImgUrl+'answer_c_act.png';
+								correctAnswerImgUrl = mPluginImgUrl+'answer_3_act.png';
 								break;
 							case 4:
-								correctAnswerImgUrl = mPluginImgUrl+'answer_d_act.png';
+								correctAnswerImgUrl = mPluginImgUrl+'answer_4_act.png';
 								break;
 							case 5:
-								correctAnswerImgUrl = mPluginImgUrl+'answer_e_act.png';
+								correctAnswerImgUrl = mPluginImgUrl+'answer_5_act.png';
 								break;
 						};
-						answerHtml = "<div style='padding:3% 0'>"
+						answerHtml = "<div class='correct-answer-div' style='padding:6% 0'>"
 						            +"<img style='margin-right:5px' src='"+correctAnswerImgUrl+"' /> "+ ajaxResult.correct_answer
 						            +"<p style='margin:3% 0'>"
 						            +"<img style='margin-right:5px' src='"+mPluginImgUrl+"correct_explanation.png' /> "+ ajaxResult.explanation
 						            +"</p>"
 						            +"</div>"
 						$('#youth_correct_quiz_answer_'+ajaxResult.q_id).html(answerHtml);
+
 					};
 					
 		        }
@@ -214,6 +222,7 @@ jQuery(document).ready(function($){
 			alert('개인정보 수집이용에 동의하셔야 합니다');
 			return;
 		};
+		$('#event_processing').css('display','block');
 		var data = {
 	      'action': 'youthqna_join_event',
 	      'user_name': userName,
@@ -226,6 +235,7 @@ jQuery(document).ready(function($){
 	        data: data,
 	        method: "POST",
 	        success: function(res) {
+	        	$('#event_processing').css('display','none');
 	            console.log('success');
 	            console.log('res : ' + JSON.stringify(res));
 	            $('#youthqna_popup_background').css('display','block');
@@ -243,7 +253,12 @@ jQuery(document).ready(function($){
 	    });
 
 	});
-
+	$('#event-result-close-btn').on('click', function(e) {
+		e.preventDefault();
+		console.log('close');
+		$('#youthqna_event_result_wrap').css('display','none');
+		$('#youthqna_popup_background').css('display','none');
+	});
 	//참여 결과 공유하기
 	$('#quiz_share_btn').on('click', function(e) {
 		e.preventDefault();
@@ -258,9 +273,18 @@ jQuery(document).ready(function($){
 	});
 	//재도전
 	$('.restart-btn').on('click', function(e) {
+	// $('.restart-btn, #event-result-close-btn').on('click', function(e) {
 		e.preventDefault();
 		console.log('restart');
 		location.reload();
+	});
+
+
+
+	/******************offline*******************/
+	$('.offline-tab').on('click', function(e) {
+		console.log('offline-tab click');
+		$('#off_show_correct_answer_wrap').attr('class','youthqna-off-tab-'+$(this).attr('tabval'));
 	});
 
 })
