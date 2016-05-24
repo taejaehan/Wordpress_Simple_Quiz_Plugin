@@ -6,7 +6,7 @@ var mPluginImgUrl = '';
 jQuery(document).ready(function($){
 
 	var mQuizFullWrap = $('#youthqna_quiz_section');
-	var mCurrentQuizStep = 0;
+	var mCurrentQuizStep = 1;
 	var mQuizCount = $('.youth-quiz').length - 1; //quiz중 #show_correct_answer 뺀 값(퀴즈 갯수)
 	function mNextStep(){
 		console.log('mQuizCount : ' + mQuizCount);
@@ -253,12 +253,12 @@ jQuery(document).ready(function($){
 	    });
 
 	});
-	$('#event-result-close-btn').on('click', function(e) {
-		e.preventDefault();
-		console.log('close');
-		$('#youthqna_event_result_wrap').css('display','none');
-		$('#youthqna_popup_background').css('display','none');
-	});
+	// $('#event-result-close-btn').on('click', function(e) {
+	// 	e.preventDefault();
+	// 	console.log('close');
+	// 	$('#youthqna_event_result_wrap').css('display','none');
+	// 	$('#youthqna_popup_background').css('display','none');
+	// });
 	//참여 결과 공유하기
 	$('#quiz_share_btn').on('click', function(e) {
 		e.preventDefault();
@@ -272,8 +272,8 @@ jQuery(document).ready(function($){
 		mNextStep();
 	});
 	//재도전
-	$('.restart-btn').on('click', function(e) {
-	// $('.restart-btn, #event-result-close-btn').on('click', function(e) {
+	// $('.restart-btn').on('click', function(e) {
+	$('.restart-btn, #event-result-close-btn').on('click', function(e) {
 		e.preventDefault();
 		console.log('restart');
 		location.reload();
@@ -284,6 +284,7 @@ jQuery(document).ready(function($){
 	/******************offline*******************/
 	$('.offline-tab').on('click', function(e) {
 		console.log('offline-tab click');
+
 		$('#off_show_correct_answer_wrap').attr('class','youthqna-off-tab-'+$(this).attr('tabval'));
 	});
 

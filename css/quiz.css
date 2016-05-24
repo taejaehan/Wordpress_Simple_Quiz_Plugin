@@ -42,7 +42,7 @@
 	padding : 4% 7.25%;
 }
 #youthqna_quiz_section .quiz-step{
-	display:block;
+	display:none;
 }
 
 .youthqna-step-1 #youthqna_quiz_start_wrap{
@@ -91,15 +91,24 @@
 
 
 #youthqna_quiz_start_wrap #youth_quiz_start{
-    width: 40%;
-    height: 9.3%;
+    width: 41.2%;
+    height: 8.5%;
     position: absolute;
-    top: 33.3%;
-    left: 30%;
+    top: 29%;
+    left: 29.5%;
     border: none;
-    background: none;
+    cursor: pointer;
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_quiz_start.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    outline:0;
 }
 
+#youthqna_quiz_start_wrap #youth_quiz_start:active{
+	/*background-color:rgba(92,213,0,0.5);*/
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_quiz_start_c.png);
+}
 .youth-quiz{
 	text-align: left;
 	padding : 8% 7.25%;
@@ -114,7 +123,7 @@
 	/*max-width:60%;*/
 }
 .youth-quiz .youth-quiz-index{
-	width:13%;
+	width:18%;
 }
 .youth-quiz .youth-quiz-field{
 	width:36%;
@@ -224,6 +233,7 @@
 }
 .selected-op .youthqna-op-btn{
 	color:#fff;
+	outline:none;
 }
 
 .youth-quiz-bottom-wrap{
@@ -244,7 +254,7 @@
 	right:0;
 	width: 50%;
     /*height: 70px;*/
-    height: 100%;
+    height: 80%;
     border: none;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_next_act.png);
     background-repeat: no-repeat;
@@ -252,8 +262,20 @@
     background-size: contain;
     background-color: rgba(0,0,0,0);
 }
+.youth-quiz-bottom-wrap .next-last {
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_last_next_act.png);
+}
 .youth-quiz-bottom-wrap .youthqna-next-btn:disabled{
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_next_dis.png);
+}
+.youth-quiz-bottom-wrap .youthqna-next-btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_next_c.png);
+}
+.youth-quiz-bottom-wrap .next-last:disabled {
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_last_next_dis.png);
+}
+.youth-quiz-bottom-wrap .next-last:active {
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_q_last_next_c.png);
 }
 /******************************이벤트 참여***************************************/
 #youthqna_result_wrap, #youthqna_event_wrap{
@@ -270,10 +292,10 @@
 }
 
 #youthqna_result_wrap #youthqna_result_text{
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 #youthqna_result_wrap .youthqna-result-bottom{
-	padding : 8% 7.25%;
+	padding : 8.5% 7.25%;
 	border-top : 2px solid #647069;
 	position: relative;
     overflow: auto;
@@ -290,6 +312,10 @@
     background-position: bottom;
     background-size: contain;
     background-color: rgba(0,0,0,0);
+    outline:none;
+}
+#youthqna_result_wrap .youthqna-result-bottom .restart-btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_restart_c.png);
 }
 
 #youthqna_result_wrap .youthqna-result-bottom #join_event_btn{
@@ -304,6 +330,10 @@
     background-position: bottom;
     background-size: contain;
     background-color: rgba(0,0,0,0);
+}
+#youthqna_result_wrap .youthqna-result-bottom #join_event_btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_join_event_c.png);
+	
 }
 .youthqna-event-table{
 	border-spacing: 5px 20px;
@@ -412,6 +442,10 @@
     background-position: bottom;
     background-size: contain;
     background-color: rgba(0,0,0,0);
+    outline:none;
+}
+.youthqna-event-bottom #event-submit-btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_event_done_c.png);
 }
 .youthqna-event-bottom #event_processing{
 	position: absolute;
@@ -439,6 +473,10 @@
     background-position: bottom;
     background-size: contain;
     background-color: rgba(0,0,0,0);
+}
+#event-result-close-btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_close_c.png);
+
 }
 #youthqna_event_result_wrap{
 	width:70%;
@@ -483,10 +521,19 @@
 #youthqna_event_result #youthqna_event_result_bottom #show_correct_answer_btn{
 	float: left;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_correct.png);
+	outline:none;
+}
+#youthqna_event_result #youthqna_event_result_bottom #show_correct_answer_btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_correct_c.png);
 }
 #youthqna_event_result #youthqna_event_result_bottom .restart-btn{
 	float: right;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_restart.png);
+	outline:none;
+}
+#youthqna_event_result #youthqna_event_result_bottom .restart-btn:active{
+	float: right;
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_popup_restart_c.png);
 }
 
 #youthqna_popup_background{
@@ -546,7 +593,7 @@
 	margin-bottom: 5%;
 }
 #show_correct_answer_wrap .restart-btn{
-	width:50%;
+	width:43%;
 	height: 70px;
 	border: none;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_correct_restart.png);
@@ -554,8 +601,11 @@
     background-position: bottom;
     background-size: contain;
     background-color: rgba(0,0,0,0);
+    outline:none;
 }
-
+#show_correct_answer_wrap .restart-btn:active{
+	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_correct_restart_c.png);
+}
 .youth-correct-answer .correct-answer-div{
 	color:#fff;
 	font-size:80%;
@@ -571,7 +621,7 @@
 	/*width:100%;*/
 }
 .off-show-correct-answer{
-	margin: 5% 0 0 0;
+	/*margin: 5% 0 0 0;*/
 	padding : 4% 7.25%;
 	background-image: url(/wp-content/plugins/youth_qna/imgs/quiz_bg.jpg);
     background-repeat: no-repeat;
@@ -591,11 +641,102 @@
 }
 .off-show-correct-answer .youth-correct-answer{
 	color:#fff;
+	padding:6% 0
+}
+.youth-correct-answer img{
+	margin-right:5px;
+}
+.youth-correct-answer .off-correct-explanation{
+	margin:3% 0
 }
 .off-show-correct-answer .youth-quiz-question{
 	margin-bottom: 5%;
 }
+.offline-top-wrap{
+	position: relative;
+	height: 70px;
+    margin-top: 12%;
+}
+.offline-bottom-wrap{
+	position: relative;
+	height: 70px;
+    margin-top: 4%;
+}
+.offline-tab-wrap{
+	position: absolute;
+	left:0;
+	top:0;
+    width: 52%;
+}
+/*tab*/
+.offline-tab-wrap .offline-tab{
+	width:32%;
+	height: 47px;
+	/*background-color:#ccc;
+	color:#fff;*/
+    border: none;
+    display: block;
+    float: left;
+    margin-right:1%;
+    /*font-size: 100%;*/
+    background : none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    outline:0;
 
+}
+.offline-tab-wrap .offline-tab-01{
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_1_dis.png);
+}
+.offline-tab-wrap .offline-tab-02{
+	margin-left:-6%;
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_2_dis.png);
+}
+.offline-tab-wrap .offline-tab-03{
+	margin-left:-6%;
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_3_dis.png);
+}
+/*button:focus {outline:0;}*/
+
+.youthqna-off-tab-1 .offline-tab-wrap .offline-tab-01{
+	/*background-color: #5cd500;
+    color: #2c4235;*/
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_1_act.png);
+}
+.youthqna-off-tab-2 .offline-tab-wrap .offline-tab-02{
+	/*background-color: #5cd500;
+    color: #2c4235;*/
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_2_act.png);
+}
+.youthqna-off-tab-3 .offline-tab-wrap .offline-tab-03{
+	/*background-color: #5cd500;
+    color: #2c4235;*/
+   	background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_3_act.png);
+}
+
+.offline-top-wrap .quiz-category-selctor{
+	width:40%;
+	position: absolute;
+	right:0;
+	top:0;
+	height: 47px;
+	background-color: #006cff;
+    color: #fff;
+    padding: 5px 8px;
+    border: none;
+    box-shadow: none;
+    /*background-color: transparent;*/
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.offline-top-wrap .quiz-category-selctor:focus {
+    outline: none;
+}
+/*contents*/
 #off_show_correct_answer_wrap .quiz-off-tab{
 	display:none;
 }
@@ -607,8 +748,8 @@
 }
 .youthqna-off-tab-3 #youth_off_tab_3{
 	display:block;
+	/*background-color: #5cd500;*/
 }
-
 
 @media (max-width:1040px) {
 

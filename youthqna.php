@@ -211,7 +211,7 @@ function youthqna_html_online_form_code($categoryId = ''){
             <div class="youth-quiz-index-wrap">
               <!-- Q<?php echo $qindex ?> -->
               <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_0<?php echo $qindex ?>.png" />
-              <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" />
+              <!-- <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" /> -->
             </div>
             <p class="youth-quiz-question">
             <?php echo $quiz->question ?>
@@ -262,7 +262,17 @@ function youthqna_html_online_form_code($categoryId = ''){
             </div>
             <div class="youth-quiz-bottom-wrap">
             <img class="youth-quiz-current" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_current_<?php echo count($quizzes); ?>_<?php echo $qindex ?>.png" />
+            <?php
+              if(intval($qindex) !== count($quizzes)):
+            ?>
               <button class="youthqna-next-btn" disabled></button>
+            <?php
+              else:
+            ?>
+              <button class="youthqna-next-btn next-last" disabled></button>
+            <?php
+              endif;
+            ?>
             </div>
           </div>
         <?php
@@ -325,14 +335,14 @@ function youthqna_html_online_form_code($categoryId = ''){
                   </td>
                   <td class="youthqna_table_empty"></td>
                   <td class="youthqna-checkbox-input">
-                    <input id="event_faq_agree_1" class="event-checkbox-input" type="checkbox">
+                    <input id="event_faq_agree_1" class="event-checkbox-input" type="checkbox" checked>
                     <label class="checkbox-label"></label>
                   </td>
                   <td class="youthqna-checkbox-label">
-                    <img class="checkbox-text" src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_agree_text.png" />
+                    <img class="checkbox-text" src="<?php echo plugins_url(); ?>/youth_qna/imgs/event_agree_text.png"/>
                   </td>
                   <td class="youthqna-checkbox-input">
-                    <input id="event_faq_agree_2" class="event-checkbox-input" type="checkbox" checked>
+                    <input id="event_faq_agree_2" class="event-checkbox-input" type="checkbox" >
                     <label class="checkbox-label"></label> 
                   </td>
                   <td class="youthqna-checkbox-label">
@@ -393,7 +403,7 @@ function youthqna_html_online_form_code($categoryId = ''){
             <div class="youth-correct-each-quiz-wrap">
               <div>
                   <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_0<?php echo $qindex ?>.png" />
-                  <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" />
+                  <!-- <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" /> -->
               </div>
               <!--edit quiz-->
               <div id="youth_correct_quiz_<?php echo $quiz->id ?>" >
@@ -462,8 +472,10 @@ function youthqna_html_offline_form_code($categoryId = ''){
   global $wpdb;
   //임시로 카테고리 아이디 지정
   // $categoryId = 1; $category="1';drop table user;";
-  $quizzes = $wpdb->get_results( 'SELECT id,type_id,field_id,type_link,question FROM youth_question WHERE deleted_at is NULL AND show_offline=1 AND c_id='.$categoryId);
-  $answers = $wpdb->get_results( 'SELECT id,q_id,answer FROM youth_answer ');
+  $quizzes = $wpdb->get_results( 'SELECT id,type_id,field_id,type_link,question,explanation FROM youth_question WHERE deleted_at is NULL AND show_offline=1 AND c_id='.$categoryId);
+  // $answers = $wpdb->get_results( 'SELECT id,q_id,answer FROM youth_answer WHERE is_correct=1');
+  $answers = $wpdb->get_results("SELECT * FROM youth_answer");
+
   $cateogries = $wpdb->get_results( 'SELECT * FROM youth_category ');
   date_default_timezone_set('Asia/Seoul');
   ?>
@@ -475,11 +487,14 @@ function youthqna_html_offline_form_code($categoryId = ''){
       <section id="youthqna_quiz_section">
         <!--quiz correct answer-->
         <div id="off_show_correct_answer_wrap" class="youthqna-off-tab-1">
-          <div id="offline-top-wrap">
-          <button tabval='1' class="offline-tab offline-tab-01">1부</button>
-          <button tabval='2'  class="offline-tab offline-tab-02">2부</button>
-          <button tabval='3'  class="offline-tab offline-tab-03">3부</button>
-          <select class="quiz-type-selctor" name="type">
+          <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/off_top_bg.png" />
+          <div class="offline-top-wrap">
+          <div class="offline-tab-wrap">
+            <button tabval='1' class="offline-tab offline-tab-01"></button>
+            <button tabval='2'  class="offline-tab offline-tab-02"></button>
+            <button tabval='3'  class="offline-tab offline-tab-03"></button>
+          </div>
+          <select class="quiz-category-selctor" name="type" >
             <?php foreach($cateogries as $c): ?>
             <option value="<?php echo $c->id?>" <?php if(intval($categoryId) ===  intval($c->id)) echo 'selected'?>>
               <?php echo $c->name?>
@@ -490,19 +505,34 @@ function youthqna_html_offline_form_code($categoryId = ''){
           <?php
             $qindex = 1;
             $tabindex = 1;
-            $quizPerTab = 3;
+            $tabEachIndex = 1;
+            // $quizPerTab = 10;
+            $quizPerTabArr = array(15,4,11);
+
             foreach($quizzes as $quiz):
-              if($qindex%$quizPerTab === 1):
+              $quizPerTab = intval($quizPerTabArr[$tabindex-1]);
+              // $quizPerTab = 3;
+              if($tabEachIndex%$quizPerTab === 1):
           ?>
             <div id="youth_off_tab_<?php echo $tabindex; ?>" class="off-show-correct-answer youth-quiz quiz-bg-border quiz-off-tab">
           <?php
             endif;
           ?>
-          
+            <!-- <?php echo $quizPerTabtest ?> -->
             <div class="youth-correct-each-quiz-wrap">
               <div>
+              <?php
+                if($qindex < 10):
+              ?>
                   <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_0<?php echo $qindex ?>.png" />
-                  <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" />
+              <?php
+                else:
+              ?>
+                <img class="youth-quiz-index" src="<?php echo plugins_url(); ?>/youth_qna/imgs/q_<?php echo $qindex ?>.png" />
+              <?php
+                endif;
+              ?>
+                  <!-- <img class="youth-quiz-field" src="<?php echo plugins_url(); ?>/youth_qna/imgs/field_0<?php echo $quiz->field_id ?>.png" /> -->
               </div>
               <!--edit quiz-->
               <div id="youth_correct_quiz_<?php echo $quiz->id ?>" >
@@ -531,35 +561,57 @@ function youthqna_html_offline_form_code($categoryId = ''){
                   <?php
                     endif;
                   ?>
-                <div class="youth-correct-answer" id="youth_correct_quiz_answer_<?php echo $quiz->id ?>">
+                <div class="youth-correct-answer">
+                  <?php
+                    $aIndex = 0;
+                    foreach($answers as $a):
+                      if(intval($a->q_id) === intval($quiz->id)):
+                        $aIndex++;
+                        if(intval($a->is_correct) === 1):
+                          
+                  ?>
+                      <div class='correct-answer-div'>
+                        <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/answer_<?php echo $aIndex ?>_act.png" />
+                        <?php echo($a->answer)?>
+                      </div>
+                  <?php
+                        break;
+                        endif;
+                      endif;
+                    endforeach;
+                  ?>
+                  <div class="off-correct-explanation">
+                  <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/correct_explanation.png" />
+                  <?php echo($quiz->explanation)?>
+                  </div>
                 </div>
               </div>
             </div>
           <?php
-            if($qindex%$quizPerTab === 0):
+            if($tabEachIndex%$quizPerTab === 0):
           ?>
             </div>
           <?php
             $tabindex++;
+            $tabEachIndex = 1;
+            else:
+            $tabEachIndex++;
             endif;
             $qindex++;
             endforeach;
           ?> 
+          <div class="offline-bottom-wrap">
+            <div class="offline-tab-wrap">
+              <button tabval='1' class="offline-tab offline-tab-01"></button>
+              <button tabval='2'  class="offline-tab offline-tab-02"></button>
+              <button tabval='3'  class="offline-tab offline-tab-03"></button>
+            </div>
+          </div>
         </div>
+        
       </section>
     </div>
-    <section id="youthqna_bottom_section">
-      <!-- <img src="<?php echo plugins_url(); ?>/youth_qna/imgs/bottom_banner_01.png"/> -->
-      <div id="youthqna_bottom_img_wrap">
-      <?php
-        for($i=1; $i < 4; $i++):
-      ?>
-        <a href="<?php echo $banners[$i]->banner_href; ?>" target="_blank"><img src="<?php echo $banners[$i]->banner_link; ?>" alt="<?php echo $banners[$i]->banner_alt; ?>"/></a>
-      <?php
-        endfor;
-      ?>
-      </div>
-    </section>
+    
   </div> 
 
   <!--youthqna_full_wrap-->
@@ -573,41 +625,43 @@ function youthqna_html_offline_form_code($categoryId = ''){
 /**
  * [공유 meta 설정]
  */
-function jetpack_og_tags_youthqna( $tags ) {
+
+/***********new blog에서는 SEO로 대체******************/
+// function jetpack_og_tags_youthqna( $tags ) {
 
   
-  // if($tags['og:url']=="http://blog.samsung.com/cool2015/")
-  // 
-  // $currentUrl = $tags['og:url'];
-  global $post;
-  $slug = get_post( $post )->post_name;
-  $currentPostNum = substr($slug, -1);
-  if($slug === 'answer1'){
-    // unset( $tags['og:image'] );
-    unset( $tags['og:url'] );
-    unset( $tags['og:title'] );
-    unset( $tags['og:description'] );
-    unset( $tags['twitter:title'] );
-    unset( $tags['twitter:description'] );
+//   // if($tags['og:url']=="http://blog.samsung.com/cool2015/")
+//   // 
+//   // $currentUrl = $tags['og:url'];
+//   global $post;
+//   $slug = get_post( $post )->post_name;
+//   $currentPostNum = substr($slug, -1);
+//   if($slug === 'answer1'){
+//     // unset( $tags['og:image'] );
+//     unset( $tags['og:url'] );
+//     unset( $tags['og:title'] );
+//     unset( $tags['og:description'] );
+//     unset( $tags['twitter:title'] );
+//     unset( $tags['twitter:description'] );
 
-    // $fb_home_img = plugin_dir_url( __FILE__ )."imgs/thumb/region".rand(1,8).".jpg";
-    // $tags['og:image'] = esc_url( $fb_home_img );
-    // $tags['og:url'] = get_post( $post );
-    $tags['og:url'] = "http://samsungblog.major-apps-1.com/answer1";
-    $fb_share_img = plugins_url()."/youth_qna/imgs/youthqna_share_".$currentPostNum.".png";
-    $tags['og:image'] = esc_url( $fb_share_img );
-    $tags['og:title'] = "당신의 퀴즈 실력! 청춘문답에서 뽐내세요.";
-    $tags['og:description'] = "청춘이면 알아야 할 기본 상식! 청춘문답 기출문제 퀴즈 도전하기! ";
-    $tags['twitter:title'] = "당신의 퀴즈 실력! 청춘문답에서 뽐내세요.";
-    $tags['twitter:description'] = "청춘이면 알아야 할 기본 상식! 청춘문답 기출문제 퀴즈 도전하기! ";
-    // $tags['twitter:card']
-    // $tags['twitter:image']
-  }
-  return $tags;
+//     // $fb_home_img = plugin_dir_url( __FILE__ )."imgs/thumb/region".rand(1,8).".jpg";
+//     // $tags['og:image'] = esc_url( $fb_home_img );
+//     // $tags['og:url'] = get_post( $post );
+//     $tags['og:url'] = "http://samsungblog.sieven.co.k/answer1";
+//     $fb_share_img = plugins_url()."/youth_qna/imgs/youthqna_share_".$currentPostNum.".png";
+//     $tags['og:image'] = esc_url( $fb_share_img );
+//     $tags['og:title'] = "당신의 퀴즈 실력! 청춘문답에서 뽐내세요.";
+//     $tags['og:description'] = "청춘이면 알아야 할 기본 상식! 청춘문답 기출문제 퀴즈 도전하기! ";
+//     $tags['twitter:title'] = "당신의 퀴즈 실력! 청춘문답에서 뽐내세요.";
+//     $tags['twitter:description'] = "청춘이면 알아야 할 기본 상식! 청춘문답 기출문제 퀴즈 도전하기! ";
+//     // $tags['twitter:card']
+//     // $tags['twitter:image']
+//   }
+//   return $tags;
   
-}
+// }
 
-add_filter( 'jetpack_open_graph_tags', 'jetpack_og_tags_youthqna' );
+// add_filter( 'jetpack_open_graph_tags', 'jetpack_og_tags_youthqna' );
 
 /*
  * [온라인 퀴즈 페이지 shortcode]
@@ -673,6 +727,7 @@ function youthqna_get_results(){
         if($aId === intval($dbAnswer->id)){
           $correctNum++;
         }
+        continue;
       }
     }
     $quizResults[$i]->correct_id = $correctId;
@@ -689,6 +744,7 @@ function youthqna_get_results(){
   );
   wp_send_json($return);
   wp_die();
+  exit;
 }
 /**
  * [관리자 페이지에서 카테고리를 추가합니다]
@@ -1116,11 +1172,10 @@ function youth_qna_install()
   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
 
   //default type setting
-  // $sql9 = "INSERT INTO youth_type (`name`) VALUES ('Text'),('Picture'),('Video');
-  // INSERT INTO youth_banner_type (`name`) VALUES ('상단 배너'),('하단 첫번째'),('하단 두번째'),('하단 세번째');
-  // INSERT INTO youth_category (`name`) VALUES ('첫번째 온라인 퀴즈'),('두번째 온라인 퀴즈');
-  // INSERT INTO youth_field (`name`) VALUES ('시사 응용 영역'),('경제 기초 영역'),('기타 영역');";
-
+  $sql9 = "INSERT INTO youth_type (`name`) VALUES ('Text'),('Picture'),('Video');
+  INSERT INTO youth_banner_type (`name`) VALUES ('상단 배너'),('하단 첫번째'),('하단 두번째'),('하단 세번째');
+  INSERT INTO youth_category (`name`) VALUES ('5월25일 연세대학교');
+  INSERT INTO youth_field (`name`) VALUES ('시사 응용 영역'),('경제 기초 영역'),('기타 영역');";
 
   $wpdb->query($sql1);
   $wpdb->query($sql2);
@@ -1169,9 +1224,9 @@ function youth_qna_scripts() {
  */
 function add_admin_youth_qna_menu() {
   add_menu_page( '청춘문답', '청춘문답', 'manage_options', 'youth_qna/admin.php');
-  add_submenu_page( 'youth_qna/admin.php', '청춘문답', '온라인 퀴즈', 'manage_options', 'youth_qna/admin.php');
+  add_submenu_page( 'youth_qna/admin.php', '청춘문답', '청춘문답 퀴즈', 'manage_options', 'youth_qna/admin.php');
   add_submenu_page( 'youth_qna/admin.php', '청춘문답', '온라인 이벤트', 'manage_options', 'youth_qna/admin_event.php');
-  add_submenu_page( 'youth_qna/admin.php', '청춘문답', '오프라인 정답해설', 'manage_options', 'youth_qna/admin_offline.php');
-  add_submenu_page( NULL, '청춘문답', '엑셀', 'manage_options', 'youth_qna/youth_qna_excel.php');
+  // add_submenu_page( 'youth_qna/admin.php', '청춘문답', '오프라인 정답해설', 'manage_options', 'youth_qna/admin_offline.php');
+  // add_submenu_page( NULL, '청춘문답', '엑셀', 'manage_options', 'youth_qna/youth_qna_excel.php');
 }
 ?>

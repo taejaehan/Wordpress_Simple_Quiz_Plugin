@@ -42,6 +42,7 @@ function youth_qna_exam(){
       <?php endforeach; ?>
     </select>
     <span >SHORTCODE : <input style="width:200px" readonly value="[youthqna_online_quiz <?php echo($category) ?>]"></input></span>
+    <span ><input style="width:200px" readonly value="[youthqna_offline_quiz <?php echo($category) ?>]"></input></span>
     <span style="float:right">
       <input  id="category_add_name" type="name" value="">
       <button id="category_add_btn">카테고리 추가하기!!</button>
