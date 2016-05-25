@@ -175,7 +175,9 @@ function youth_qna_exam(){
             ?>
             </p>
             <input name="type_link_file" type="file" isDirty="FALSE" />
+            <div>
             ALT : <input name="img_alt" type="name" value="<?php echo($quiz->img_alt) ?>"/>
+            </div>
           <?php
             else:
               //video
@@ -196,6 +198,12 @@ function youth_qna_exam(){
           </td>
           <td>
             <input name="question" type="name" value="<?php echo($quiz->question) ?>" />
+            <div>
+              <input name="question_sub" type="name" value="<?php echo($quiz->question_sub) ?>">
+            </div>
+            <div>
+              <input name="question_text" type="name" value="<?php echo($quiz->question_text) ?>">
+            </div>
           </td>
           <td>
             <?php 
@@ -234,6 +242,9 @@ function youth_qna_exam(){
           </td>
           <td>
           <input class="offline-checkbox-input" name="show_offline" type="checkbox" value="<?php if($quiz->show_offline): echo '1'; else: echo '0'; endif;?>" <?php if($quiz->show_offline) echo 'checked';?>>
+          <div>
+              <input name="offline_num" type="name" value="<?php echo($quiz->offline_num) ?>">
+          </div>
           </td>
           <td>
             <div><button type="submit" class="quiz-save-btn">Save</button></div>
@@ -280,6 +291,12 @@ function youth_qna_exam(){
           </td>
           <td>
             <input name="question" type="name" value="">
+            <div>
+              <input name="question_sub" type="name" value="">
+            </div>
+            <div>
+              <input name="question_text" type="name" value="">
+            </div>
           </td>
           <td>
             <?php 
@@ -303,6 +320,9 @@ function youth_qna_exam(){
           </td>
           <td>
           <input class="offline-checkbox-input" name="show_offline" type="checkbox" value="1" checked="true">
+          <div>
+              <input name="offline_num" type="name" value="">
+          </div>
           </td>
           <td>
             <div><button type="submit" class="quiz-save-btn">Save</button></div>

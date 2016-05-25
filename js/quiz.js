@@ -4,6 +4,10 @@ var mUserScore = 4;
 var mCategoryId = 1;
 var mPluginImgUrl = '';
 jQuery(document).ready(function($){
+	console.log('ready');
+	// window.scrollTo(0, 0);
+	// $(window).scrollTop(0);
+	$(this).scrollTop(0);
 
 	var mQuizFullWrap = $('#youthqna_quiz_section');
 	var mCurrentQuizStep = 1;
@@ -19,9 +23,12 @@ jQuery(document).ready(function($){
 		}
 		console.log('mCurrentQuizStep : ' + mCurrentQuizStep);
 		if(mCurrentQuizStep < 11){
+			//스탭 9 (이벤트완료시) background 검정으로 설정하기 위함
 			if(mCurrentQuizStep !== 9){
-				$('#youthqna_popup_background').css('display','none');
-			};
+				$('#youthqna_full_wrap').attr('class','');
+			}else{
+				$('#youthqna_full_wrap').attr('class','step-background');
+			}
 			mQuizFullWrap.attr('class','youthqna-step-'+mCurrentQuizStep);
 		}
 	};
@@ -230,6 +237,7 @@ jQuery(document).ready(function($){
 	      'user_score': mUserScore,
 	      'category_id' : mCategoryId
 	    };
+		$(this).unbind();
 		$.ajax({
 	        url: mUrl,
 	        data: data,
@@ -238,7 +246,6 @@ jQuery(document).ready(function($){
 	        	$('#event_processing').css('display','none');
 	            console.log('success');
 	            console.log('res : ' + JSON.stringify(res));
-	            $('#youthqna_popup_background').css('display','block');
 	            mNextStep();
 				// $('#youthqna_result_wrap').css('display','block');
 
@@ -253,12 +260,7 @@ jQuery(document).ready(function($){
 	    });
 
 	});
-	// $('#event-result-close-btn').on('click', function(e) {
-	// 	e.preventDefault();
-	// 	console.log('close');
-	// 	$('#youthqna_event_result_wrap').css('display','none');
-	// 	$('#youthqna_popup_background').css('display','none');
-	// });
+
 	//참여 결과 공유하기
 	$('#quiz_share_btn').on('click', function(e) {
 		e.preventDefault();
@@ -268,7 +270,6 @@ jQuery(document).ready(function($){
 	$('#show_correct_answer_btn').on('click', function(e) {
 		e.preventDefault();
 		console.log('correct');
-		$('#youthqna_popup_background').css('display','none');
 		mNextStep();
 	});
 	//재도전
@@ -286,6 +287,7 @@ jQuery(document).ready(function($){
 		console.log('offline-tab click');
 
 		$('#off_show_correct_answer_wrap').attr('class','youthqna-off-tab-'+$(this).attr('tabval'));
+		window.scrollTo(0, 500);
 	});
 
 })

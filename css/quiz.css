@@ -79,6 +79,12 @@
 .youthqna-step-10 #show_correct_answer_wrap{
 	display:block;
 }
+#youthqna_full_wrap #youthqna_popup_background{
+	display:none;
+}
+.step-background #youthqna_popup_background{
+	display:block;
+}
 /******************************퀴즈 시작/진행***************************************/
 
 .quiz-bg-border{
@@ -133,6 +139,11 @@
 	margin: 10px 0 20px;
 	font-weight: 500;
 }
+.youth-quiz .youth-quiz-question .youth-quiz-question-sub{
+	color:#fdfe00;
+	font-weight: 100;
+
+}
 .youth-quiz-refer{
 	border: 3px solid #5cd500;
 	background-color:#fff;
@@ -170,26 +181,42 @@
 }
 
 .youthqna-op-btn{
-	display: table;
+	/*display: table;
 	border: none;
     background: none;
     border-spacing: 0 7px;
     border-collapse: separate;
-    color:#aaa;
+    color:#aaa;*/
+    border: none;
+    background: none;
+    color: #aaa;
+    width: 100%;
 }
 .youthqna-op-btn .youthqna-op-index{
-	width: 42px;
+	/*width: 42px;
     height: 42px;
 	display: table-cell;
 	background-repeat: no-repeat;
     background-position: center top;
+    background-size: contain;*/
+    width: 42px;
+    height: 42px;
+    background-repeat: no-repeat;
+    background-position: center top;
     background-size: contain;
+    width: 10%;
+    float: left;
 }
 .youthqna-op-btn .youthqna-op-answer{
-	display: table-cell;
+	/*display: table-cell;
 	line-height: 42px;
     border-left: 10px solid rgba(0,0,0,0);
+    text-align: left;*/
+
     text-align: left;
+    width: 88%;
+    float: left;
+    margin: 2.5% 0 0 2%;
 }
 .op-index-1{
 	/*background-image: url(/wp-content/plugins/youth_qna/imgs/answer_a_dis.png);*/
@@ -544,7 +571,7 @@
     top: 0;
     left: 0;
     z-index:10;
-    display: none;
+    /*display: none;*/
 }
 
 
@@ -560,6 +587,7 @@
 #youthqna_event_share_btn_wrap a img{
 	width: 25%;
 	max-width: 60px;
+	cursor: pointer;
 }
 
 
@@ -590,7 +618,7 @@
 	color:#fff;
 }
 #show_correct_answer .youth-quiz-question{
-	margin-bottom: 5%;
+	/*margin-bottom: 5%;*/
 }
 #show_correct_answer_wrap .restart-btn{
 	width:43%;
@@ -608,11 +636,12 @@
 }
 .youth-correct-answer .correct-answer-div{
 	color:#fff;
-	font-size:80%;
+	/*line-height: 42px;*/
+	/*font-size:80%;*/
 }
 .youth-correct-answer .correct-answer-div p{
 	color:#fff;
-	font-size:80%;
+	/*font-size:80%;*/
 }
 
 
@@ -641,7 +670,7 @@
 }
 .off-show-correct-answer .youth-correct-answer{
 	color:#fff;
-	padding:6% 0
+	padding:5% 0 6% 0;
 }
 .youth-correct-answer img{
 	margin-right:5px;
@@ -686,6 +715,19 @@
     outline:0;
 
 }
+.offline-tab-wrap .offline-tab-one{
+    width: 66%;
+    height: 47px;
+    border: none;
+    display: block;
+    float: left;
+    background : none;
+    background-repeat: no-repeat;
+    outline:0;
+    background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_one.png);
+    background-size: contain;
+    background-position: left;
+}
 .offline-tab-wrap .offline-tab-01{
     background-image: url(/wp-content/plugins/youth_qna/imgs/btn_tab_off_1_dis.png);
 }
@@ -726,12 +768,20 @@
     padding: 5px 8px;
     border: none;
     box-shadow: none;
+    text-align: left;
+	line-height: 35px;
     /*background-color: transparent;*/
-    background-image: none;
+   /* background-image: none;
     -webkit-appearance: none;
        -moz-appearance: none;
-            appearance: none;
+            appearance: none;*/
 }
+
+/*.offline-top-wrap .quiz-category-selctor[disabled='disabled']::-ms-value {
+    color: #fff;
+    outline: none;
+    border: none; 
+}*/
 
 .offline-top-wrap .quiz-category-selctor:focus {
     outline: none;
@@ -788,21 +838,26 @@
 		height: 50px;
 	}
 
-
+	.offline-top-wrap .quiz-category-selctor{
+	    font-size: 90%;
+	}
 }
 
 @media (max-width:480px) {
+	.offline-top-wrap .quiz-category-selctor{
+	    font-size: 80%;
+	}
 	#youthqna_quiz_section{
 	    padding: 4% 2%;
 	}
 	.youthqna-event-mid .youthqna-table-input input{
-		font-size:70%;
+		font-size:60%;
 	}
 	.youth-quiz-refer .youth-quiz-refer-text{
 		font-size:80%;
 	}
 	.youthqna-op-btn .youthqna-op-index{
-		width: 32px;
+		/*width: 32px;*/
 	    height: 32px;
 	}
 	.youth-correct-answer img{
